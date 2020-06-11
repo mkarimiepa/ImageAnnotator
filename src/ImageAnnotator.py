@@ -25,8 +25,11 @@ class bcolors:
 
 # Global variables
 todays_date = f"{datetime.datetime.today().month}-{datetime.datetime.today().day}-{datetime.datetime.today().year}"
-csv_file = f"annotations-with-numbers{todays_date}.csv"  # name of the csv output file that uses numbers not names
-csv_file2 = f"annotations-with-names{todays_date}.csv"  # name of the csv output file that uses material names
+user = os.path.abspath("").split("\\")[2]  # current user, this value is used in the 4 variables below
+path_to_imgs_to_annotate_dir = ""  # TODO
+path_to_imgs_temp_dir = ""  # TODO
+path_to_imgs_annotated_dir = ""  # TODO
+path_to_output_csv = ""  # TODO
 numbers_to_materials_dict = {1: "Brick", 2: "Wood", 3: "Glass", 4: "Concrete", 5: "Steel", 6: "None", 7: "Deleted"}
 nums_to_use_dict = {1: "Agriculture", 2: "Banks", 3: "Church/Non-Profit", 4: "Colleges/Universities", 5: "Construction",
                     6: "Emergency Response", 7: "Entertainment & Recreation", 8: "Food/Drugs/Chemicals",
@@ -72,7 +75,7 @@ def ask_building_material():
 
 
 """
-This function asks the user what the category of use of the building in the image is.]
+This function asks the user what the category of use of the building in the image is.
 
 @return building_use the use of the building as selected by the user
 """
@@ -81,19 +84,19 @@ This function asks the user what the category of use of the building in the imag
 def ask_building_use():
     while True:
         print("\nWhat is the category of use of the building(s) in this image?"
-              "\n1. Agriculture\t\t\t\t\t\t\t\t2. Banks\t\t\t\t\t\t\t\t\t3. Church/Non-Profit\t\t\t\t\t"
-              " 4. Colleges/Universities\n5. Construction\t\t\t\t\t\t\t\t6. Emergency Response\t\t\t\t\t\t"
-              "7. Entertainment & Recreation\t\t\t 8. Food/Drugs/Chemicals\n9. General Services\t\t\t\t\t\t\t"
-              "10. Grade Schools\t\t\t\t\t\t\t11. Heavy\t\t\t\t\t\t\t\t 12. High Technology\n13. Hospital"
-              "\t\t\t\t\t\t\t\t14. Institutional Dormitory\t\t\t\t\t15. Light\t\t\t\t\t\t\t\t 16. Medical Office/Clinic"
-              "\n17. Metals/Minerals Processing\t\t\t\t18. Mobile Home\t\t\t\t\t\t\t\t"
-              "19. Multi Family Dwelling - Duplex\t\t 20. Multi Family Dwelling - 3-4 Units"
-              "\n21. Multi Family Dwelling - 5-9 Units"
-              "\t\t22. Multi Family Dwelling - 10-19 Units\t\t23. Multi Family Dwelling - 20-49 Units"
-              "\t 24. Multi Family Dwelling - 50+ Units\n25. Nursing Home\t\t\t\t\t\t\t26. Parking"
-              "\t\t\t\t\t\t\t\t\t27. Personal and Repair Services\t\t 28. Professional/Technical Services"
-              "\n29. Retail Trade\t\t\t\t\t\t\t30. Single Family Dwelling\t\t\t\t\t31. Temporary Lodging\t\t\t\t\t"
-              " 32. Theaters\n33. Wholesale Trade")
+              "\n 1. Agriculture\t\t\t\t 2. Banks\t\t\t\t 3. Church/Non-Profit"
+              "\n 4. Colleges/Universities\t\t 5. Construction\t\t\t 6. Emergency Response"
+              "\n 7. Entertainment & Recreation\t\t 8. Food/Drugs/Chemicals\t\t 9. General Services"
+              "\n10. Grade Schools\t\t\t11. Heavy\t\t\t\t12. High Technology"
+              "\n13. Hospital\t\t\t\t14. Institutional Dormitory\t\t15. Light"
+              "\n16. Medical Office/Clinic\t\t17. Metals/Minerals Processing\t\t18. Mobile Home"
+              "\n19. Multi Family Dwelling - Duplex\t20. Multi Family Dwelling - 3-4 Units"
+                "\t21. Multi Family Dwelling - 5-9 Units"
+              "\n22. Multi Family Dwelling - 10-19 Units\t23. Multi Family Dwelling - 20-49 Units"
+                "\t24. Multi Family Dwelling - 50+ Units"
+              "\n25. Nursing Home\t\t\t26. Parking\t\t\t\t27. Personal and Repair Services"
+              "\n28. Professional/Technical Services\t29. Retail Trade\t\t\t30. Single Family Dwelling"
+              "\n31. Temporary Lodging\t\t\t32. Theaters\t\t\t\t33. Wholesale Trade")
         user_choice = input("Enter number: ")
         try:
             if user_choice.isalpha() or int(user_choice) < 1 or int(user_choice) > 33:
@@ -127,21 +130,21 @@ colors()
 # Start up and main menu
 print(f"\n{bcolors.HEADER}WELCOME TO THE IMAGEANNOTATOR{bcolors.ENDC}")
 print("The purpose of this software is to categorize images of buildings displayed to the user, the results of which"
-      " will be written to 2 CSV files.\nIn order for the software to work properly, there are some rules and"
-      " guidelines that must be followed.")
-print("\nOnce you start, you will be shown images of buildings one-by-one, and for each image you must:")
+      " will be\nwritten to a CSV file. In order for the software to work properly, there are some rules and"
+      "guidelines that must be\nfollowed.")
+print("\nOnce you start, you will be asked how many images you want to annotate for this session. "
+      "Then you will be shown images\nof buildings one-by-one, and for each image you must:")
 print("1. Determine the majority construction material in that building and then enter that option into the system.")
 print("2. Determine the 2nd majority construction material in the building, if any. If none, enter 6 in the system.")
 print("3. Determine the category of use of the building (Ex. Residential, Office, School, etc.).")
 
 print(f"\n{bcolors.WARNING}Note:{bcolors.ENDC}")
 print("  -You also have the option of deleting an image if the building is difficult to see, covered by other objects,"
-      " not a good representation of that material,\n  too far away, if there are too many other objects/people in the"
-      " image, or for other reasons you deem significant enough. If you are unsure, don't delete it.")
+      " not a\n\tgood representation of that material, too far away, if there are too many other objects/people in the"
+      " image, or \t\tfor other reasons you deem significant enough. If you are unsure, don't delete it.")
 print("  -When you start a session, please finish the session completely, do not end halfway.")
-print("  -If you restart a session, you will have to do the whole set again.")
-print("  -The program will inform you when you have started and ended a session.")
-print("  -For our purposes, there will be 112 images in every set/session, so be sure to set aside enough time.")
+print("  -The program will inform you when you have started and finished a session.")
+print("  -The program will let you know how many images are left to annotate, so you can enter any number <= that.")
 
 while True:
     answer = input("\nDo you acknowledge the above, and are ready to begin?\n"
@@ -153,6 +156,15 @@ while True:
     elif answer.lower() != 'a':
         print("Invalid choice")
     else:
+        break
+
+while True:
+    answer = input("\nHow many images do you want to annotate: ")
+    # TODO: Get number of imgs in ToAnnotate directory currently
+    if not answer.isdigit() or int(answer) < 1 or int(answer) > 9660:
+        print("Invalid choice")
+    else:
+        num_images = int(answer)
         break
 
 # Quality Test section - asking user same questions on two images who's values are already known
@@ -196,9 +208,8 @@ if primary_material != 4 or secondary_material != 3 or building_use != 28:
 
 print(f"\n{bcolors.OKBLUE}Session start{bcolors.ENDC}")
 
-images = os.listdir("images")  # files will be added in descending order, starting from 0-9, then a-z (case ignored)
-open(csv_file, "w")
-open(csv_file2, "w")  # these lines clear the files, if they already exist
+# TODO: Move number of images chosen to the Temp directory from ToAnnotate directory here
+images = os.listdir(path_to_imgs_temp_dir)  # files added in descending order, from 0-9, then a-z (case ignored)
 
 n = 1
 num_images = len(images)
@@ -209,12 +220,11 @@ for image in images:
     building_use = ask_building_use()
     os.system("taskkill /f /im WLXPhotoGallery.exe /t >nul 2>&1")  # close the image
 
-    with open(csv_file, "a") as output:  # write results to first csv file, using the numbers entered
-        output.write(f"{image},{primary_material},{secondary_material},{building_use}\n")
-
-    with open(csv_file2, "a") as output:  # write results to second csv file, converting the numbers to material names
-        output.write(f"{image},{numbers_to_materials_dict[primary_material]},"
-                     f"{numbers_to_materials_dict[secondary_material]},{nums_to_use_dict[building_use]}\n")
+    with open(path_to_output_csv, "a") as output:  # write results to first csv file, using the numbers entered
+        output.write(f"{image},{primary_material},{secondary_material},{building_use},"
+                     f"{numbers_to_materials_dict[primary_material]},{numbers_to_materials_dict[secondary_material]},"
+                     f"{nums_to_use_dict[building_use]}\n")
+    # TODO: move annotated image to the Annotated directory from Temp directory
     n += 1
 
 if num_images > 0:
