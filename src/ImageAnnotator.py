@@ -189,7 +189,7 @@ while True:
 # Quality Test section - asking user same questions on two images who's values are already known
 img = cv2.imread("quality_check_imgs/barn.jpg")  # show first test img
 cv2.imshow(f"Image 1", img)
-cv2.waitKey(2000)
+cv2.waitKey(2000)  # wait 2 seconds
 primary_material, secondary_material = ask_building_material()  # ask user 2 main materials make up the building
 building_use = ask_building_use()
 cv2.destroyAllWindows()  # close the image
