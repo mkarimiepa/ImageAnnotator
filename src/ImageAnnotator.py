@@ -1,7 +1,7 @@
 """
 ImageAnnotator - created by Muhammad T Karimi - 6/1/2020
 For the purpose of Annotating images in a streamlined and easy way. Designed so the user can annotate any number of
-images contained in the images directory, and the choice of the user (from 5 or 6 answer choices) will be saved in
+images contained in the images directory, and the choice of the user will be saved in
 a csv file next to the image file name.
 """
 
@@ -188,28 +188,28 @@ while True:
 
 # Quality Test section - asking user same questions on two images who's values are already known
 img = cv2.imread("quality_check_imgs/barn.jpg")  # show first test img
-cv2.imshow(f"Image 1", img)
+cv2.imshow("Image 1", img)
 cv2.waitKey(2000)  # wait 2 seconds
 primary_material, secondary_material = ask_building_material()  # ask user 2 main materials make up the building
-building_use = ask_building_use()
+building_use = ask_building_use()  # ask what category of use the building is used for
 cv2.destroyAllWindows()  # close the image
 
 # if user got a question wrong, show them which one
 if primary_material != 2 or secondary_material != 6 or building_use != 1:
     print(f"\n{bcolors.OKBLUE}This is a test question. Please review the correct answers.{bcolors.ENDC}")
     print(f"For primary material, you said: {bcolors.FAIL}{numbers_to_materials_dict[primary_material]}{bcolors.ENDC}"
-          "\t\t\t\t\tCorrect answer: Wood" if primary_material != 2 else "For primary material, you said: "
-          f"{numbers_to_materials_dict[primary_material]}\t\t\t\t\tCorrect answer: Wood")
+          "\t\tCorrect answer: Wood" if primary_material != 2 else "For primary material, you said: "
+          f"{numbers_to_materials_dict[primary_material]}\t\tCorrect answer: Wood")
     print(f"For secondary material, you said: {bcolors.FAIL}{numbers_to_materials_dict[secondary_material]}"
-          f"{bcolors.ENDC}\t\t\t\t\tCorrect answer: None" if secondary_material != 6 else "For secondary material, you "
-          f"said: {numbers_to_materials_dict[secondary_material]}\t\t\t\t\tCorrect answer: None")
+          f"{bcolors.ENDC}\t\tCorrect answer: None" if secondary_material != 6 else "For secondary material, you "
+          f"said: {numbers_to_materials_dict[secondary_material]}\t\tCorrect answer: None")
     print(f"For building use, you said: {bcolors.FAIL}{nums_to_use_dict[building_use]}{bcolors.ENDC}"
-          f"\t\t\t\t\tCorrect answer: Agriculture" if building_use != 1 else
-          f"For building use, you said: {nums_to_use_dict[building_use]}\t\t\t\t\tCorrect answer: Agriculture")
+          f"\t\tCorrect answer: Agriculture" if building_use != 1 else
+          f"For building use, you said: {nums_to_use_dict[building_use]}\t\tCorrect answer: Agriculture")
     time.sleep(5)  # pause system to give user time to read corrections before continuing
 
 img = cv2.imread("quality_check_imgs/office.jpg")  # show 2nd test img
-cv2.imshow(f"Image 2", img)
+cv2.imshow("Image 2", img)
 cv2.waitKey(2000)
 primary_material, secondary_material = ask_building_material()  # ask user 2 main materials make up the building
 building_use = ask_building_use()
@@ -220,13 +220,13 @@ if primary_material != 4 or secondary_material != 3 or building_use != 28:
     print(f"\n{bcolors.OKBLUE}This is a test question. Please review the correct answers.{bcolors.ENDC}")
     print(f"For primary material, you said: {bcolors.FAIL}{numbers_to_materials_dict[primary_material]}{bcolors.ENDC}"
           f"\t\tCorrect answer: Concrete" if primary_material != 4 else f"For primary material, you said: "
-          f"{numbers_to_materials_dict[primary_material]}\t\t\t\t\tCorrect answer: Wood")
+          f"{numbers_to_materials_dict[primary_material]}\t\tCorrect answer: Concrete")
     print(f"For secondary material, you said: {bcolors.FAIL}{numbers_to_materials_dict[secondary_material]}"
-          f"{bcolors.ENDC}\t\t\t\t\tCorrect answer: None" if secondary_material != 3 else f"For secondary material, "
-          f"you said: {numbers_to_materials_dict[secondary_material]}\t\t\t\t\tCorrect answer: Wood")
+          f"{bcolors.ENDC}\t\tCorrect answer: Glass" if secondary_material != 3 else f"For secondary material, "
+          f"you said: {numbers_to_materials_dict[secondary_material]}\t\tCorrect answer: Glass")
     print(f"For building use, you said: {bcolors.FAIL}{nums_to_use_dict[building_use]}{bcolors.ENDC}"
-          f"\t\t\t\t\tCorrect answer: Agriculture" if building_use != 28 else
-          f"For building use, you said: {nums_to_use_dict[building_use]}\t\t\t\t\tCorrect answer: Agriculture")
+          f"\t\tCorrect answer: Professional/Technical Services" if building_use != 28 else f"For building use, "
+          f"you said: {nums_to_use_dict[building_use]}\t\tCorrect answer: Professional/Technical Services")
     time.sleep(5)  # pause system to give user time to read corrections before continuing
 
 print(f"\n{bcolors.OKBLUE}Session start{bcolors.ENDC}")
