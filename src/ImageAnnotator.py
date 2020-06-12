@@ -251,9 +251,14 @@ num_images = len(images)
 for image in images:
     print(f"\n{bcolors.UNDERLINE}Image {n}/{num_images}{bcolors.ENDC}")
 
-    img = cv2.imread(f"{path_to_imgs_temp_dir}/{image}")  # start the image
-    cv2.imshow(f"Image {n}", img)
-    cv2.waitKey(2000)
+    try:  # check for any errors that might be thrown
+        img = cv2.imread(f"{path_to_imgs_temp_dir}/{image}")  # start the image
+        cv2.imshow(f"Image {n}", img)
+        cv2.waitKey(2000)
+    except:  # if error, most likely it is because image no longer exists
+        print(f"{bcolors.WARNING}Image doesn't exist. Moving to next image.{bcolors.ENDC}")
+        n += 1
+        continue
 
     primary_material, secondary_material = ask_building_material()  # ask user 2 main materials make up the building
     building_use = ask_building_use()
@@ -273,10 +278,14 @@ for image in images:
         except:  # if it doesn't work the first time, try again, up to 10 times
             print(f"{bcolors.WARNING}Writing to output.csv failed, trying again...{bcolors.ENDC}")
             i += 1
-            if i == 10:
-                print(f"{bcolors.FAIL}Writing failed,{bcolors.OKBLUE} moving image back and going to ToAnnotate"
-                      f"next image.{bcolors.ENDC}")
-    shutil.move(f"{path_to_imgs_temp_dir}/{image}", f"{path_to_imgs_annotated_dir}/{image}")  # move image to annotated
+
+    if i < 10:  # if writing was successful, then move the image to the Annotated dir (which means its been annotated)
+        shutil.move(f"{path_to_imgs_temp_dir}/{image}", f"{path_to_imgs_annotated_dir}/{image}")
+    else:
+        print(f"{bcolors.FAIL}Writing failed,{bcolors.OKBLUE} moving image back to ToAnnotate and progressing "
+              f"to next image.{bcolors.ENDC}")
+        shutil.move(f"{path_to_imgs_temp_dir}/{image}", f"{path_to_imgs_to_annotate_dir}/{image}")
+
     n += 1  # done with that image now
 
 if num_images > 0:
