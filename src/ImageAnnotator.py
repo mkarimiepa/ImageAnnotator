@@ -9,7 +9,9 @@ import os
 import datetime
 import ctypes
 import time
-
+import random
+import shutil
+import cv2
 
 # colors
 class bcolors:
@@ -26,10 +28,24 @@ class bcolors:
 # Global variables
 todays_date = f"{datetime.datetime.today().month}-{datetime.datetime.today().day}-{datetime.datetime.today().year}"
 user = os.path.abspath("").split("\\")[2]  # current user, this value is used in the 4 variables below
-path_to_imgs_to_annotate_dir = ""  # TODO
-path_to_imgs_temp_dir = ""  # TODO
-path_to_imgs_annotated_dir = ""  # TODO
-path_to_output_csv = ""  # TODO
+if user == 'mkarimi':  # the path for the one who is hosting/sharing the folder is slightly different
+    path_to_imgs_to_annotate_dir = f"C:/Users/{user}/OneDrive - Environmental Protection Agency (EPA)" \
+                                f"/ImageAnnotation/ToAnnotate"  # path to imgs not annotated
+    path_to_imgs_temp_dir = f"C:/Users/{user}/OneDrive - Environmental Protection Agency (EPA)" \
+                            f"/ImageAnnotation/Temp"  # path to imgs being annotated
+    path_to_imgs_annotated_dir = f"C:/Users/{user}/OneDrive - Environmental Protection Agency (EPA)" \
+                                 f"/ImageAnnotation/Annotated"  # path to imgs annotated
+    path_to_output_csv = f"C:/Users/{user}/OneDrive - Environmental Protection Agency (EPA)" \
+                         f"/ImageAnnotation/output.csv"  # path to the CSV output file
+else:  # for everyone else, the path will be like the following
+    path_to_imgs_to_annotate_dir = f"C:/Users/{user}/Environmental Protection Agency (EPA)" \
+                                f"/Karimi, Muhammad (Taha) – ImageAnnotation/ToAnnotate"  # path to imgs not annotated
+    path_to_imgs_temp_dir = f"C:/Users/{user}/Environmental Protection Agency (EPA)" \
+                            f"/Karimi, Muhammad (Taha) – ImageAnnotation/Temp"  # path to imgs being annotated
+    path_to_imgs_annotated_dir = f"C:/Users/{user}/Environmental Protection Agency (EPA)" \
+                                 f"/Karimi, Muhammad (Taha) – ImageAnnotation/Annotated"  # path to imgs annotated
+    path_to_output_csv = f"C:/Users/{user}/Environmental Protection Agency (EPA)" \
+                         f"/Karimi, Muhammad (Taha) – ImageAnnotation/output.csv"  # path to the CSV output file
 numbers_to_materials_dict = {1: "Brick", 2: "Wood", 3: "Glass", 4: "Concrete", 5: "Steel", 6: "None", 7: "Deleted"}
 nums_to_use_dict = {1: "Agriculture", 2: "Banks", 3: "Church/Non-Profit", 4: "Colleges/Universities", 5: "Construction",
                     6: "Emergency Response", 7: "Entertainment & Recreation", 8: "Food/Drugs/Chemicals",
@@ -158,10 +174,11 @@ while True:
     else:
         break
 
+to_annotate = os.listdir(path_to_imgs_to_annotate_dir)
 while True:
     answer = input("\nHow many images do you want to annotate: ")
-    # TODO: Get number of imgs in ToAnnotate directory currently
-    if not answer.isdigit() or int(answer) < 1 or int(answer) > 9660:
+    imgs_left = len(to_annotate)
+    if not answer.isdigit() or int(answer) < 1 or int(answer) > imgs_left:
         print("Invalid choice")
     else:
         num_images = int(answer)
@@ -178,10 +195,10 @@ if primary_material != 2 or secondary_material != 6 or building_use != 1:
     print(f"\n{bcolors.OKBLUE}This is a test question. Please review the correct answers.{bcolors.ENDC}")
     print(f"For primary material, you said: {bcolors.FAIL}{numbers_to_materials_dict[primary_material]}{bcolors.ENDC}"
           "\t\t\t\t\tCorrect answer: Wood" if primary_material != 2 else "For primary material, you said: "
-                                                                         f"{numbers_to_materials_dict[primary_material]}\t\t\t\t\tCorrect answer: Wood")
+          f"{numbers_to_materials_dict[primary_material]}\t\t\t\t\tCorrect answer: Wood")
     print(f"For secondary material, you said: {bcolors.FAIL}{numbers_to_materials_dict[secondary_material]}"
           f"{bcolors.ENDC}\t\t\t\t\tCorrect answer: None" if secondary_material != 6 else "For secondary material, you "
-                                                                                          f"said: {numbers_to_materials_dict[secondary_material]}\t\t\t\t\tCorrect answer: None")
+          f"said: {numbers_to_materials_dict[secondary_material]}\t\t\t\t\tCorrect answer: None")
     print(f"For building use, you said: {bcolors.FAIL}{nums_to_use_dict[building_use]}{bcolors.ENDC}"
           f"\t\t\t\t\tCorrect answer: Agriculture" if building_use != 1 else
           f"For building use, you said: {nums_to_use_dict[building_use]}\t\t\t\t\tCorrect answer: Agriculture")
@@ -196,11 +213,11 @@ os.system("taskkill /f /im WLXPhotoGallery.exe /t >nul 2>&1")  # close the image
 if primary_material != 4 or secondary_material != 3 or building_use != 28:
     print(f"\n{bcolors.OKBLUE}This is a test question. Please review the correct answers.{bcolors.ENDC}")
     print(f"For primary material, you said: {bcolors.FAIL}{numbers_to_materials_dict[primary_material]}{bcolors.ENDC}"
-          f"\t\tCorrect answer: Concrete" if primary_material != 4
-          else f"For primary material, you said: {numbers_to_materials_dict[primary_material]}\t\t\t\t\tCorrect answer: Wood")
+          f"\t\tCorrect answer: Concrete" if primary_material != 4 else f"For primary material, you said: "
+          f"{numbers_to_materials_dict[primary_material]}\t\t\t\t\tCorrect answer: Wood")
     print(f"For secondary material, you said: {bcolors.FAIL}{numbers_to_materials_dict[secondary_material]}"
-          f"{bcolors.ENDC}\t\t\t\t\tCorrect answer: None" if secondary_material != 3 else
-          f"For secondary material, you said: {numbers_to_materials_dict[secondary_material]}\t\t\t\t\tCorrect answer: Wood")
+          f"{bcolors.ENDC}\t\t\t\t\tCorrect answer: None" if secondary_material != 3 else f"For secondary material, "
+          f"you said: {numbers_to_materials_dict[secondary_material]}\t\t\t\t\tCorrect answer: Wood")
     print(f"For building use, you said: {bcolors.FAIL}{nums_to_use_dict[building_use]}{bcolors.ENDC}"
           f"\t\t\t\t\tCorrect answer: Agriculture" if building_use != 28 else
           f"For building use, you said: {nums_to_use_dict[building_use]}\t\t\t\t\tCorrect answer: Agriculture")
@@ -208,24 +225,53 @@ if primary_material != 4 or secondary_material != 3 or building_use != 28:
 
 print(f"\n{bcolors.OKBLUE}Session start{bcolors.ENDC}")
 
-# TODO: Move number of images chosen to the Temp directory from ToAnnotate directory here
-images = os.listdir(path_to_imgs_temp_dir)  # files added in descending order, from 0-9, then a-z (case ignored)
+images = []  # create list that will store the images to annotate for this session
+for _ in range(num_images):  # iterate for the # of times = # of images user wanted to annotate
+    try:
+        image_to_move = random.choice(to_annotate)  # randomly choose an image from the ToAnnotate folder
+        # Move it from ToAnnotate folder to the Temp folder, preventing any other instances from annotating the same img
+        shutil.move(f"{path_to_imgs_to_annotate_dir}/{image_to_move}", f"{path_to_imgs_temp_dir}/{image_to_move}")
+        images.append(image_to_move)  # add the moved image to the images to annotate list for this session
+        to_annotate.remove(image_to_move)  # remove image from the to_annotate list, so that it isn't randomly chosen
+    except:
+        to_annotate = os.listdir(path_to_imgs_to_annotate_dir)  # update current list, and try again
+        image_to_move = random.choice(to_annotate)  # same operations again
+        shutil.move(f"{path_to_imgs_to_annotate_dir}/{image_to_move}", f"{path_to_imgs_temp_dir}/{image_to_move}")
+        images.append(image_to_move)
+        to_annotate.remove(image_to_move)
 
 n = 1
 num_images = len(images)
 for image in images:
     print(f"\n{bcolors.UNDERLINE}Image {n}/{num_images}{bcolors.ENDC}")
-    os.system(f"start images/{image}")  # start the image
+
+    img = cv2.imread(f"{path_to_imgs_temp_dir}/{image}")  # start the image
+    cv2.imshow(f"Image {n}", img)
+    cv2.waitKey(3000)
+
     primary_material, secondary_material = ask_building_material()  # ask user 2 main materials make up the building
     building_use = ask_building_use()
-    os.system("taskkill /f /im WLXPhotoGallery.exe /t >nul 2>&1")  # close the image
 
-    with open(path_to_output_csv, "a") as output:  # write results to first csv file, using the numbers entered
-        output.write(f"{image},{primary_material},{secondary_material},{building_use},"
-                     f"{numbers_to_materials_dict[primary_material]},{numbers_to_materials_dict[secondary_material]},"
-                     f"{nums_to_use_dict[building_use]}\n")
-    # TODO: move annotated image to the Annotated directory from Temp directory
-    n += 1
+    cv2.destroyAllWindows()  # close image
+
+    i = 0
+    while i < 10:  # writing to output.csv
+        try:
+            with open(path_to_output_csv, "a") as output:  # write results to csv file, numbers first, then strings
+                output.write(f"{image},{primary_material},{secondary_material},{building_use},"
+                        f"{numbers_to_materials_dict[primary_material]},{numbers_to_materials_dict[secondary_material]},"
+                        f"{nums_to_use_dict[building_use]}\n")
+            if i > 0:
+                print(f"{bcolors.OKGREEN}Successful!{bcolors.ENDC}")
+            break  # if it works, break the loop and continue with annotation
+        except:  # if it doesn't work the first time, try again, up to 10 times
+            print(f"{bcolors.WARNING}Writing to output.csv failed, trying again...{bcolors.ENDC}")
+            i += 1
+            if i == 10:
+                print(f"{bcolors.FAIL}Writing failed,{bcolors.OKBLUE} moving image back and going to ToAnnotate"
+                      f"next image.{bcolors.ENDC}")
+    shutil.move(f"{path_to_imgs_temp_dir}/{image}", f"{path_to_imgs_annotated_dir}/{image}")  # move image to annotated
+    n += 1  # done with that image now
 
 if num_images > 0:
-    print(f"\n{bcolors.OKGREEN}Session complete! Thank you!{bcolors.ENDC}")
+    print(f"\n{bcolors.OKGREEN}{bcolors.BOLD}Session complete! Thank you for your time and help!{bcolors.ENDC}")
