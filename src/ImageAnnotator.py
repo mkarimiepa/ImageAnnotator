@@ -28,7 +28,7 @@ class bcolors:
 # Global variables
 todays_date = f"{datetime.datetime.today().month}-{datetime.datetime.today().day}-{datetime.datetime.today().year}"
 user = os.path.abspath("").split("\\")[2]  # current user, this value is used in the 4 variables below
-if user == 'mkarimi':  # the path for the one who is hosting/sharing the folder is slightly different
+if user.lower() == 'mkarimi':  # the path for the one who is hosting/sharing the folder is slightly different
     path_to_imgs_to_annotate_dir = f"C:/Users/{user}/OneDrive - Environmental Protection Agency (EPA)" \
                                 f"/ImageAnnotation/ToAnnotate"  # path to imgs not annotated
     path_to_imgs_temp_dir = f"C:/Users/{user}/OneDrive - Environmental Protection Agency (EPA)" \
@@ -155,6 +155,8 @@ print("2. Determine the 2nd majority construction material in the building, if a
 print("3. Determine the category of use of the building (Ex. Residential, Office, School, etc.).")
 
 print(f"\n{bcolors.WARNING}Note:{bcolors.ENDC}")
+print("  -Questions should appear 2 seconds after the image is shown. If a question does not appear, press any key\n\t"
+      "while on the console.")
 print("  -You also have the option of deleting an image if the building is difficult to see, covered by other objects,"
       " not a\n\tgood representation of that material, too far away, if there are too many other objects/people in the"
       " image, or \t\tfor other reasons you deem significant enough. If you are unsure, don't delete it.")
@@ -185,10 +187,12 @@ while True:
         break
 
 # Quality Test section - asking user same questions on two images who's values are already known
-os.system(f"start quality_check_imgs/barn.jpg")  # show first test img
+img = cv2.imread("quality_check_imgs/barn.jpg")  # show first test img
+cv2.imshow(f"Image 1", img)
+cv2.waitKey(2000)
 primary_material, secondary_material = ask_building_material()  # ask user 2 main materials make up the building
 building_use = ask_building_use()
-os.system("taskkill /f /im WLXPhotoGallery.exe /t >nul 2>&1")  # close the image
+cv2.destroyAllWindows()  # close the image
 
 # if user got a question wrong, show them which one
 if primary_material != 2 or secondary_material != 6 or building_use != 1:
@@ -204,10 +208,12 @@ if primary_material != 2 or secondary_material != 6 or building_use != 1:
           f"For building use, you said: {nums_to_use_dict[building_use]}\t\t\t\t\tCorrect answer: Agriculture")
     time.sleep(5)  # pause system to give user time to read corrections before continuing
 
-os.system(f"start quality_check_imgs/office.jpg")  # show 2nd test img
+img = cv2.imread("quality_check_imgs/office.jpg")  # show 2nd test img
+cv2.imshow(f"Image 2", img)
+cv2.waitKey(2000)
 primary_material, secondary_material = ask_building_material()  # ask user 2 main materials make up the building
 building_use = ask_building_use()
-os.system("taskkill /f /im WLXPhotoGallery.exe /t >nul 2>&1")  # close the image
+cv2.destroyAllWindows()  # close the image
 
 # if user got a question wrong, show them which one
 if primary_material != 4 or secondary_material != 3 or building_use != 28:
@@ -247,7 +253,7 @@ for image in images:
 
     img = cv2.imread(f"{path_to_imgs_temp_dir}/{image}")  # start the image
     cv2.imshow(f"Image {n}", img)
-    cv2.waitKey(3000)
+    cv2.waitKey(2000)
 
     primary_material, secondary_material = ask_building_material()  # ask user 2 main materials make up the building
     building_use = ask_building_use()
