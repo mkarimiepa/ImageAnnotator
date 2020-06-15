@@ -39,13 +39,13 @@ if user.lower() == 'mkarimi':  # the path for the one who is hosting/sharing the
                          f"/ImageAnnotation/output.csv"  # path to the CSV output file
 else:  # for everyone else, the path will be like the following
     path_to_imgs_to_annotate_dir = f"C:/Users/{user}/Environmental Protection Agency (EPA)" \
-                                f"/Karimi, Muhammad (Taha) – ImageAnnotation/ToAnnotate"  # path to imgs not annotated
+                                f"/Karimi, Muhammad (Taha) - ImageAnnotation/ToAnnotate"  # path to imgs not annotated
     path_to_imgs_temp_dir = f"C:/Users/{user}/Environmental Protection Agency (EPA)" \
-                            f"/Karimi, Muhammad (Taha) – ImageAnnotation/Temp"  # path to imgs being annotated
+                            f"/Karimi, Muhammad (Taha) - ImageAnnotation/Temp"  # path to imgs being annotated
     path_to_imgs_annotated_dir = f"C:/Users/{user}/Environmental Protection Agency (EPA)" \
-                                 f"/Karimi, Muhammad (Taha) – ImageAnnotation/Annotated"  # path to imgs annotated
+                                 f"/Karimi, Muhammad (Taha) - ImageAnnotation/Annotated"  # path to imgs annotated
     path_to_output_csv = f"C:/Users/{user}/Environmental Protection Agency (EPA)" \
-                         f"/Karimi, Muhammad (Taha) – ImageAnnotation/output.csv"  # path to the CSV output file
+                         f"/Karimi, Muhammad (Taha) - ImageAnnotation/output.csv"  # path to the CSV output file
 numbers_to_materials_dict = {1: "Brick", 2: "Wood", 3: "Glass", 4: "Concrete", 5: "Steel", 6: "None", 7: "Deleted"}
 nums_to_use_dict = {1: "Agriculture", 2: "Banks", 3: "Church/Non-Profit", 4: "Colleges/Universities", 5: "Construction",
                     6: "Emergency Response", 7: "Entertainment & Recreation", 8: "Food/Drugs/Chemicals",
