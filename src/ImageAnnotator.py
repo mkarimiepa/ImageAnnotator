@@ -47,16 +47,13 @@ else:  # for everyone else, the path will be like the following
     path_to_output_csv = f"C:/Users/{user}/Environmental Protection Agency (EPA)" \
                          f"/Karimi, Muhammad (Taha) - ImageAnnotation/output.csv"  # path to the CSV output file
 numbers_to_materials_dict = {1: "Brick", 2: "Wood", 3: "Glass", 4: "Concrete", 5: "Steel", 6: "None", 7: "Deleted"}
-nums_to_use_dict = {1: "Agriculture", 2: "Banks", 3: "Church/Non-Profit", 4: "Colleges/Universities", 5: "Construction",
-                    6: "Emergency Response", 7: "Entertainment & Recreation", 8: "Food/Drugs/Chemicals",
-                    9: "General Services", 10: "Grade Schools", 11: "Heavy", 12: "High Technology", 13: "Hospital",
-                    14: "Institutional Dormitory", 15: "Light", 16: "Medical Office/Clinic",
-                    17: "Metals/Minerals Processing", 18: "Mobile Home", 19: "Multi Family Dwelling - Duplex",
-                    20: "Multi Family Dwelling - 3-4 Units", 21: "Multi Family Dwelling - 5-9 Units",
-                    22: "Multi Family Dwelling - 10-19 Units", 23: "Multi Family Dwelling - 20-49 Units",
-                    24: "Multi Family Dwelling - 50+ Units", 25: "Nursing Home", 26: "Parking",
-                    27: "Personal and Repair Services", 28: "Professional/Technical Services", 29: "Retail Trade",
-                    30: "Single Family Dwelling", 31: "Temporary Lodging", 32: "Theaters", 33: "Wholesale Trade"}
+nums_to_use_dict = {1: "Single Family Dwelling", 2: "Small Multi Family Dwelling - 2-4 Units",
+                    3: "Medium Multi Family Dwelling - 5-50 Units", 4: "Large Multi Family Dwelling - >50 Units",
+                    5: "Retail or Professional Services", 6: "Industry/Manufacturing", 7: "Technology/Research",
+                    8: "Entertainment & Recreation", 9: "Colleges/Universities", 10: "Grade Schools", 11: "Government",
+                    12: "Emergency Response", 13: "Hospital", 14: "Medical Office/Clinic", 15: "Nursing Home",
+                    16: "Mobile Home", 17: "Parking", 18: "Banks", 19: "Agriculture", 20: "Lodging",
+                    21: "Church/Non-Profit", 22: "Construction"}
 
 """
 This function asks the user what the primary material of the building in the image is, and then asks the secondary 
@@ -100,23 +97,18 @@ This function asks the user what the category of use of the building in the imag
 def ask_building_use():
     while True:
         print("\nWhat is the category of use of the building(s) in this image?"
-              "\n 1. Agriculture\t\t\t\t 2. Banks\t\t\t\t 3. Church/Non-Profit"
-              "\n 4. Colleges/Universities\t\t 5. Construction\t\t\t 6. Emergency Response"
-              "\n 7. Entertainment & Recreation\t\t 8. Food/Drugs/Chemicals\t\t 9. General Services"
-              "\n10. Grade Schools\t\t\t11. Heavy\t\t\t\t12. High Technology"
-              "\n13. Hospital\t\t\t\t14. Institutional Dormitory\t\t15. Light"
-              "\n16. Medical Office/Clinic\t\t17. Metals/Minerals Processing\t\t18. Mobile Home"
-              "\n19. Multi Family Dwelling - Duplex\t20. Multi Family Dwelling - 3-4 Units"
-                "\t21. Multi Family Dwelling - 5-9 Units"
-              "\n22. Multi Family Dwelling - 10-19 Units\t23. Multi Family Dwelling - 20-49 Units"
-                "\t24. Multi Family Dwelling - 50+ Units"
-              "\n25. Nursing Home\t\t\t26. Parking\t\t\t\t27. Personal and Repair Services"
-              "\n28. Professional/Technical Services\t29. Retail Trade\t\t\t30. Single Family Dwelling"
-              "\n31. Temporary Lodging\t\t\t32. Theaters\t\t\t\t33. Wholesale Trade")
+              "\n 1. Single Family Dwelling\t\t\t 2. Small Multi Family Dwelling - 2-4 Units"
+              "\n 3. Medium Multi Family Dwelling - 5-50 Units\t 4. Large Multi Family Dwelling - >50 Units"
+              "\n 5. Retail or Professional Services\t\t 6. Industry/Manufacturing\t\t 7. Technology/Research"
+              "\n 8. Entertainment & Recreation\t\t\t 9. Colleges/Universities\t\t10. Grade Schools"
+              "\n11. Government\t\t\t\t\t12. Emergency Response\t\t\t13. Hospital"
+              "\n14. Medical Office/Clinic\t\t\t15. Nursing Home\t\t\t16. Mobile Home"
+              "\n17. Parking\t\t\t\t\t18. Banks\t\t\t\t19. Agriculture"
+              "\n20. Lodging\t\t\t\t\t21. Church/Non-Profit\t\t\t22. Construction")
         user_choice = input("Enter number: ")
         try:
-            if user_choice.isalpha() or int(user_choice) < 1 or int(user_choice) > 33:
-                print("Invalid choice\n")  # if user entered < 1 or > 33 or not a number
+            if user_choice.isalpha() or int(user_choice) < 1 or int(user_choice) > 22:
+                print("Invalid choice\n")  # if user entered < 1 or > 22 or not a number
                 continue
         except ValueError:
             print("Invalid choice\n")
@@ -195,7 +187,7 @@ building_use = ask_building_use()  # ask what category of use the building is us
 cv2.destroyAllWindows()  # close the image
 
 # if user got a question wrong, show them which one
-if primary_material != 2 or secondary_material != 6 or building_use != 1:
+if primary_material != 2 or secondary_material != 6 or building_use != 19:
     print(f"\n{bcolors.OKBLUE}This is a test question. Please review the correct answers.{bcolors.ENDC}")
     print(f"For primary material, you said: {bcolors.FAIL}{numbers_to_materials_dict[primary_material]}{bcolors.ENDC}"
           "\t\tCorrect answer: Wood" if primary_material != 2 else "For primary material, you said: "
@@ -204,7 +196,7 @@ if primary_material != 2 or secondary_material != 6 or building_use != 1:
           f"{bcolors.ENDC}\t\tCorrect answer: None" if secondary_material != 6 else "For secondary material, you "
           f"said: {numbers_to_materials_dict[secondary_material]}\t\tCorrect answer: None")
     print(f"For building use, you said: {bcolors.FAIL}{nums_to_use_dict[building_use]}{bcolors.ENDC}"
-          f"\t\tCorrect answer: Agriculture" if building_use != 1 else
+          f"\t\tCorrect answer: Agriculture" if building_use != 19 else
           f"For building use, you said: {nums_to_use_dict[building_use]}\t\tCorrect answer: Agriculture")
     time.sleep(5)  # pause system to give user time to read corrections before continuing
 
@@ -216,7 +208,7 @@ building_use = ask_building_use()
 cv2.destroyAllWindows()  # close the image
 
 # if user got a question wrong, show them which one
-if primary_material != 4 or secondary_material != 3 or building_use != 28:
+if primary_material != 4 or secondary_material != 3 or building_use != 5:
     print(f"\n{bcolors.OKBLUE}This is a test question. Please review the correct answers.{bcolors.ENDC}")
     print(f"For primary material, you said: {bcolors.FAIL}{numbers_to_materials_dict[primary_material]}{bcolors.ENDC}"
           f"\t\tCorrect answer: Concrete" if primary_material != 4 else f"For primary material, you said: "
@@ -225,8 +217,8 @@ if primary_material != 4 or secondary_material != 3 or building_use != 28:
           f"{bcolors.ENDC}\t\tCorrect answer: Glass" if secondary_material != 3 else f"For secondary material, "
           f"you said: {numbers_to_materials_dict[secondary_material]}\t\tCorrect answer: Glass")
     print(f"For building use, you said: {bcolors.FAIL}{nums_to_use_dict[building_use]}{bcolors.ENDC}"
-          f"\t\tCorrect answer: Professional/Technical Services" if building_use != 28 else f"For building use, "
-          f"you said: {nums_to_use_dict[building_use]}\t\tCorrect answer: Professional/Technical Services")
+          f"\t\tCorrect answer: Retail or Professional Services" if building_use != 5 else f"For building use, "
+          f"you said: {nums_to_use_dict[building_use]}\t\tCorrect answer: Retail or Professional Services")
     time.sleep(5)  # pause system to give user time to read corrections before continuing
 
 print(f"\n{bcolors.OKBLUE}Session start{bcolors.ENDC}")
