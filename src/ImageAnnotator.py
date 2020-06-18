@@ -13,6 +13,7 @@ import random
 import shutil
 import cv2
 
+
 # colors
 class bcolors:
     HEADER = '\033[95m'
@@ -30,7 +31,7 @@ todays_date = f"{datetime.datetime.today().month}-{datetime.datetime.today().day
 user = os.path.abspath("").split("\\")[2]  # current user, this value is used in the 4 variables below
 if user.lower() == 'mkarimi':  # the path for the one who is hosting/sharing the folder is slightly different
     path_to_imgs_to_annotate_dir = f"C:/Users/{user}/OneDrive - Environmental Protection Agency (EPA)" \
-                                f"/ImageAnnotation/ToAnnotate"  # path to imgs not annotated
+                                   f"/ImageAnnotation/ToAnnotate"  # path to imgs not annotated
     path_to_imgs_temp_dir = f"C:/Users/{user}/OneDrive - Environmental Protection Agency (EPA)" \
                             f"/ImageAnnotation/Temp"  # path to imgs being annotated
     path_to_imgs_annotated_dir = f"C:/Users/{user}/OneDrive - Environmental Protection Agency (EPA)" \
@@ -39,7 +40,7 @@ if user.lower() == 'mkarimi':  # the path for the one who is hosting/sharing the
                          f"/ImageAnnotation/output.csv"  # path to the CSV output file
 else:  # for everyone else, the path will be like the following
     path_to_imgs_to_annotate_dir = f"C:/Users/{user}/Environmental Protection Agency (EPA)" \
-                                f"/Karimi, Muhammad (Taha) - ImageAnnotation/ToAnnotate"  # path to imgs not annotated
+                                   f"/Karimi, Muhammad (Taha) - ImageAnnotation/ToAnnotate"  # path to imgs not annotated
     path_to_imgs_temp_dir = f"C:/Users/{user}/Environmental Protection Agency (EPA)" \
                             f"/Karimi, Muhammad (Taha) - ImageAnnotation/Temp"  # path to imgs being annotated
     path_to_imgs_annotated_dir = f"C:/Users/{user}/Environmental Protection Agency (EPA)" \
@@ -156,6 +157,25 @@ print("  -When you start a session, please finish the session completely, do not
 print("  -The program will inform you when you have started and finished a session.")
 print("  -The program will let you know how many images are left to annotate, so you can enter any number <= that.")
 
+# Credits and Citations
+print(f"\n{bcolors.WARNING}Citations{bcolors.ENDC}")
+print("The images in this dataset were taken from the SUN2012, Places and Places2 datasets, whose citations are below:")
+print(f"\t{bcolors.BOLD}SUN2012{bcolors.ENDC}: \"SUN Database: Large-scale Scene Recognition from Abbey to Zoo\". "
+      "J. Xiao, J. Hays,\n\tK. Ehinger, A. Oliva, and A. Torralba. IEEE Conference on Computer Vision and"
+      "\n\tPattern Recognition, 2010."
+      "\n\n\thttp://web.mit.edu/jxiao/Public/publication/2010/CVPR_sun/paper.pdf")
+print(f"\n\t{bcolors.BOLD}Places{bcolors.ENDC}: B. Zhou, A. Lapedriza, J. Xiao, A. Torralba, and A. Oliva."
+      "\n\tLearning Deep Features for Scene Recognition using Places Database."
+      "\n\tAdvances in Neural Information Processing Systems 27 (NIPS), 2014.."
+      "\n\thttp://places.csail.mit.edu/user/")
+print(f"\n\t{bcolors.BOLD}Places2{bcolors.ENDC}: Places: A 10 million Image Database for Scene Recognition"
+      "\n\tB. Zhou, A. Lapedriza, A. Khosla, A. Oliva, and A. Torralba"
+      "\n\tIEEE Transactions on Pattern Analysis and Machine Intelligence, 2017"
+      "\n\n\tBolei Zhou, Aditya Khosla, Agata Lapedriza, Antonio Torralba and Aude Oliva"
+      "\n\tPlaces: A 10 million Image Database for Scene Recognition."
+      "\n\tarXiv:1610.02055"
+      "\n\thttp://places2.csail.mit.edu/")
+
 while True:
     answer = input("\nDo you acknowledge the above, and are ready to begin?\n"
                    "a. Yes\n"
@@ -191,10 +211,10 @@ if primary_material != 2 or secondary_material != 6 or building_use != 19:
     print(f"\n{bcolors.OKBLUE}This is a test question. Please review the correct answers.{bcolors.ENDC}")
     print(f"For primary material, you said: {bcolors.FAIL}{numbers_to_materials_dict[primary_material]}{bcolors.ENDC}"
           "\t\tCorrect answer: Wood" if primary_material != 2 else "For primary material, you said: "
-          f"{numbers_to_materials_dict[primary_material]}\t\tCorrect answer: Wood")
+                                                                   f"{numbers_to_materials_dict[primary_material]}\t\tCorrect answer: Wood")
     print(f"For secondary material, you said: {bcolors.FAIL}{numbers_to_materials_dict[secondary_material]}"
           f"{bcolors.ENDC}\t\tCorrect answer: None" if secondary_material != 6 else "For secondary material, you "
-          f"said: {numbers_to_materials_dict[secondary_material]}\t\tCorrect answer: None")
+                                                                                    f"said: {numbers_to_materials_dict[secondary_material]}\t\tCorrect answer: None")
     print(f"For building use, you said: {bcolors.FAIL}{nums_to_use_dict[building_use]}{bcolors.ENDC}"
           f"\t\tCorrect answer: Agriculture" if building_use != 19 else
           f"For building use, you said: {nums_to_use_dict[building_use]}\t\tCorrect answer: Agriculture")
@@ -212,13 +232,13 @@ if primary_material != 4 or secondary_material != 3 or building_use != 5:
     print(f"\n{bcolors.OKBLUE}This is a test question. Please review the correct answers.{bcolors.ENDC}")
     print(f"For primary material, you said: {bcolors.FAIL}{numbers_to_materials_dict[primary_material]}{bcolors.ENDC}"
           f"\t\tCorrect answer: Concrete" if primary_material != 4 else f"For primary material, you said: "
-          f"{numbers_to_materials_dict[primary_material]}\t\tCorrect answer: Concrete")
+                                                                        f"{numbers_to_materials_dict[primary_material]}\t\tCorrect answer: Concrete")
     print(f"For secondary material, you said: {bcolors.FAIL}{numbers_to_materials_dict[secondary_material]}"
           f"{bcolors.ENDC}\t\tCorrect answer: Glass" if secondary_material != 3 else f"For secondary material, "
-          f"you said: {numbers_to_materials_dict[secondary_material]}\t\tCorrect answer: Glass")
+                                                                                     f"you said: {numbers_to_materials_dict[secondary_material]}\t\tCorrect answer: Glass")
     print(f"For building use, you said: {bcolors.FAIL}{nums_to_use_dict[building_use]}{bcolors.ENDC}"
           f"\t\tCorrect answer: Retail or Professional Services" if building_use != 5 else f"For building use, "
-          f"you said: {nums_to_use_dict[building_use]}\t\tCorrect answer: Retail or Professional Services")
+                                                                                           f"you said: {nums_to_use_dict[building_use]}\t\tCorrect answer: Retail or Professional Services")
     time.sleep(5)  # pause system to give user time to read corrections before continuing
 
 print(f"\n{bcolors.OKBLUE}Session start{bcolors.ENDC}")
@@ -262,8 +282,8 @@ for image in images:
         try:
             with open(path_to_output_csv, "a") as output:  # write results to csv file, numbers first, then strings
                 output.write(f"{image},{primary_material},{secondary_material},{building_use},"
-                        f"{numbers_to_materials_dict[primary_material]},{numbers_to_materials_dict[secondary_material]},"
-                        f"{nums_to_use_dict[building_use]}\n")
+                             f"{numbers_to_materials_dict[primary_material]},{numbers_to_materials_dict[secondary_material]},"
+                             f"{nums_to_use_dict[building_use]}\n")
             if i > 0:
                 print(f"{bcolors.OKGREEN}Successful!{bcolors.ENDC}")
             break  # if it works, break the loop and continue with annotation
