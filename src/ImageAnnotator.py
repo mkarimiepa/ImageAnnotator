@@ -40,14 +40,14 @@ if user.lower() == 'mkarimi':  # the path for the one who is hosting/sharing the
                          f"/ImageAnnotation/output.csv"  # path to the CSV output file
 else:  # for everyone else, the path will be like the following
     path_to_imgs_to_annotate_dir = f"C:/Users/{user}/Environmental Protection Agency (EPA)" \
-                                   f"/Karimi, Muhammad (Taha) - ImageAnnotation/ToAnnotate"  # path to imgs not annotated
+                                   f"/Karimi, Muhammad (Taha) - ImageAnnotation/ToAnnotate"  # path to imgs not anntated
     path_to_imgs_temp_dir = f"C:/Users/{user}/Environmental Protection Agency (EPA)" \
                             f"/Karimi, Muhammad (Taha) - ImageAnnotation/Temp"  # path to imgs being annotated
     path_to_imgs_annotated_dir = f"C:/Users/{user}/Environmental Protection Agency (EPA)" \
                                  f"/Karimi, Muhammad (Taha) - ImageAnnotation/Annotated"  # path to imgs annotated
     path_to_output_csv = f"C:/Users/{user}/Environmental Protection Agency (EPA)" \
                          f"/Karimi, Muhammad (Taha) - ImageAnnotation/output.csv"  # path to the CSV output file
-numbers_to_materials_dict = {1: "Brick", 2: "Wood", 3: "Glass", 4: "Concrete", 5: "Steel", 6: "None", 7: "Deleted"}
+numbers_to_materials_dict = {1: "Brick", 2: "Wood/Siding", 3: "Glass", 4: "Concrete", 5: "Steel", 6: "None", 7: "Deleted"}
 nums_to_use_dict = {1: "Single Family Dwelling", 2: "Small Multi Family Dwelling - 2-4 Units",
                     3: "Medium Multi Family Dwelling - 5-50 Units", 4: "Large Multi Family Dwelling - >50 Units",
                     5: "Retail or Professional Services", 6: "Industry/Manufacturing", 7: "Technology/Research",
@@ -70,8 +70,8 @@ material that makes up the building.
 def ask_building_material():
     while True:
         print("\nWhat are the majority/primary and secondary construction materials of the building(s) in this image?"
-              "\n1. Brick\t\t2. Wood\t\t3. Glass\t\t7. Delete"
-              "\n4. Concrete\t\t5. Steel\t6. None")
+              "\n1. Brick\t\t2. Wood/Siding\t\t3. Glass\t\t7. Delete"
+              "\n4. Concrete\t\t5. Steel\t\t6. None")
         user_choices = input("Enter numbers with a space (Ex. '1 3', to delete: '7 7'): ")
         user_choices_list = user_choices.split(" ")  # get two users building material choices
         try:
@@ -152,7 +152,7 @@ print("  -Questions should appear 2 seconds after the image is shown. If a quest
       "while on the console.")
 print("  -You also have the option of deleting an image if the building is difficult to see, covered by other objects,"
       " not a\n\tgood representation of that material, too far away, if there are too many other objects/people in the"
-      " image, or \t\tfor other reasons you deem significant enough. If you are unsure, don't delete it.")
+      " image, or\n\tfor other reasons you deem significant enough. If you are unsure, don't delete it.")
 print("  -When you start a session, please finish the session completely, do not end halfway.")
 print("  -The program will inform you when you have started and finished a session.")
 print("  -The program will let you know how many images are left to annotate, so you can enter any number <= that.")
@@ -210,11 +210,11 @@ cv2.destroyAllWindows()  # close the image
 if primary_material != 2 or secondary_material != 6 or building_use != 19:
     print(f"\n{bcolors.OKBLUE}This is a test question. Please review the correct answers.{bcolors.ENDC}")
     print(f"For primary material, you said: {bcolors.FAIL}{numbers_to_materials_dict[primary_material]}{bcolors.ENDC}"
-          "\t\tCorrect answer: Wood" if primary_material != 2 else "For primary material, you said: "
-                                                                   f"{numbers_to_materials_dict[primary_material]}\t\tCorrect answer: Wood")
+          "\t\tCorrect answer: Wood/Siding" if primary_material != 2 else "For primary material, you said: "
+          f"{numbers_to_materials_dict[primary_material]}\t\tCorrect answer: Wood/Siding")
     print(f"For secondary material, you said: {bcolors.FAIL}{numbers_to_materials_dict[secondary_material]}"
           f"{bcolors.ENDC}\t\tCorrect answer: None" if secondary_material != 6 else "For secondary material, you "
-                                                                                    f"said: {numbers_to_materials_dict[secondary_material]}\t\tCorrect answer: None")
+          f"said: {numbers_to_materials_dict[secondary_material]}\t\tCorrect answer: None")
     print(f"For building use, you said: {bcolors.FAIL}{nums_to_use_dict[building_use]}{bcolors.ENDC}"
           f"\t\tCorrect answer: Agriculture" if building_use != 19 else
           f"For building use, you said: {nums_to_use_dict[building_use]}\t\tCorrect answer: Agriculture")
@@ -232,13 +232,13 @@ if primary_material != 4 or secondary_material != 3 or building_use != 5:
     print(f"\n{bcolors.OKBLUE}This is a test question. Please review the correct answers.{bcolors.ENDC}")
     print(f"For primary material, you said: {bcolors.FAIL}{numbers_to_materials_dict[primary_material]}{bcolors.ENDC}"
           f"\t\tCorrect answer: Concrete" if primary_material != 4 else f"For primary material, you said: "
-                                                                        f"{numbers_to_materials_dict[primary_material]}\t\tCorrect answer: Concrete")
+          f"{numbers_to_materials_dict[primary_material]}\t\tCorrect answer: Concrete")
     print(f"For secondary material, you said: {bcolors.FAIL}{numbers_to_materials_dict[secondary_material]}"
           f"{bcolors.ENDC}\t\tCorrect answer: Glass" if secondary_material != 3 else f"For secondary material, "
-                                                                                     f"you said: {numbers_to_materials_dict[secondary_material]}\t\tCorrect answer: Glass")
+          f"you said: {numbers_to_materials_dict[secondary_material]}\t\tCorrect answer: Glass")
     print(f"For building use, you said: {bcolors.FAIL}{nums_to_use_dict[building_use]}{bcolors.ENDC}"
           f"\t\tCorrect answer: Retail or Professional Services" if building_use != 5 else f"For building use, "
-                                                                                           f"you said: {nums_to_use_dict[building_use]}\t\tCorrect answer: Retail or Professional Services")
+          f"you said: {nums_to_use_dict[building_use]}\t\tCorrect answer: Retail or Professional Services")
     time.sleep(5)  # pause system to give user time to read corrections before continuing
 
 print(f"\n{bcolors.OKBLUE}Session start{bcolors.ENDC}")
