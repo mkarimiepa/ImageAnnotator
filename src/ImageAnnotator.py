@@ -37,7 +37,7 @@ if user.lower() == 'mkarimi':  # the path for the one who is hosting/sharing the
     path_to_imgs_annotated_dir = f"C:/Users/{user}/OneDrive - Environmental Protection Agency (EPA)" \
                                  f"/ImageAnnotation/Annotated"  # path to imgs annotated
     path_to_output_csv = f"C:/Users/{user}/OneDrive - Environmental Protection Agency (EPA)" \
-                         f"/ImageAnnotation/output.csv"  # path to the CSV output file
+                         f"/ImageAnnotation/output-{user}.csv"  # path to the CSV output file
 else:  # for everyone else, the path will be like the following
     path_to_imgs_to_annotate_dir = f"C:/Users/{user}/Environmental Protection Agency (EPA)" \
                                    f"/Karimi, Muhammad (Taha) - ImageAnnotation/ToAnnotate"  # path to imgs not anntated
@@ -46,7 +46,7 @@ else:  # for everyone else, the path will be like the following
     path_to_imgs_annotated_dir = f"C:/Users/{user}/Environmental Protection Agency (EPA)" \
                                  f"/Karimi, Muhammad (Taha) - ImageAnnotation/Annotated"  # path to imgs annotated
     path_to_output_csv = f"C:/Users/{user}/Environmental Protection Agency (EPA)" \
-                         f"/Karimi, Muhammad (Taha) - ImageAnnotation/output.csv"  # path to the CSV output file
+                         f"/Karimi, Muhammad (Taha) - ImageAnnotation/output-{user}.csv"  # path to the CSV output file
 numbers_to_materials_dict = {1: "Brick", 2: "Wood/Siding", 3: "Glass", 4: "Concrete", 5: "Steel", 6: "None", 7: "Deleted"}
 nums_to_use_dict = {1: "Single Family Dwelling", 2: "Small Multi Family Dwelling - 2-4 Units",
                     3: "Medium Multi Family Dwelling - 5-50 Units", 4: "Large Multi Family Dwelling - >50 Units",
