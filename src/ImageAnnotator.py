@@ -47,7 +47,7 @@ else:  # for everyone else, the path will be like the following
                                  f"/Karimi, Muhammad (Taha) - ImageAnnotation/Annotated"  # path to imgs annotated
     path_to_output_csv = f"C:/Users/{user}/Environmental Protection Agency (EPA)" \
                          f"/Karimi, Muhammad (Taha) - ImageAnnotation/output-{user}.csv"  # path to the CSV output file
-numbers_to_materials_dict = {1: "Brick", 2: "Wood/Siding", 3: "Glass", 4: "Concrete", 5: "Steel", 6: "None", 7: "Deleted"}
+numbers_to_materials_dict = {1: "Brick", 2: "Wood/Siding", 3: "Glass", 4: "Concrete", 5: "Steel", 6: "Stone", 7: "None", 8: "Deleted"}
 nums_to_use_dict = {1: "Single Family Dwelling", 2: "Small Multi Family Dwelling - 2-4 Units",
                     3: "Medium Multi Family Dwelling - 5-50 Units", 4: "Large Multi Family Dwelling - >50 Units",
                     5: "Retail or Professional Services", 6: "Industry/Manufacturing", 7: "Technology/Research",
@@ -70,16 +70,16 @@ material that makes up the building.
 def ask_building_material():
     while True:
         print("\nWhat are the majority/primary and secondary construction materials of the building(s) in this image?"
-              "\n1. Brick\t\t2. Wood/Siding\t\t3. Glass\t\t7. Delete"
-              "\n4. Concrete\t\t5. Steel\t\t6. None")
-        user_choices = input("Enter numbers with a space (Ex. '1 3', to delete: '7 7'): ")
+              "\n1. Brick\t\t2. Wood/Siding\t\t3. Glass\t4. Concrete"
+              "\n5. Steel\t\t6. Stone\t\t7. None\t\t8. Delete")
+        user_choices = input("Enter numbers with a space (Ex. '1 3', to delete: '8 8'): ")
         user_choices_list = user_choices.split(" ")  # get two users building material choices
         try:
             primary_choice = user_choices_list[0]
             secondary_choice = user_choices_list[1]
             if primary_choice.isalpha() or secondary_choice.isalpha() or int(primary_choice) < 1 or int(primary_choice) \
-                    > 7 or int(secondary_choice) < 1 or int(secondary_choice) > 7:
-                print("Invalid choice")  # if user entered <1 or >7 or not a number
+                    > 8 or int(secondary_choice) < 1 or int(secondary_choice) > 8:
+                print("Invalid choice")  # if user entered <1 or >8 or not a number
                 continue
         except (IndexError, ValueError):
             print("Invalid choice")
@@ -207,13 +207,13 @@ building_use = ask_building_use()  # ask what category of use the building is us
 cv2.destroyAllWindows()  # close the image
 
 # if user got a question wrong, show them which one
-if primary_material != 2 or secondary_material != 6 or building_use != 19:
+if primary_material != 2 or secondary_material != 7 or building_use != 19:
     print(f"\n{bcolors.OKBLUE}This is a test question. Please review the correct answers.{bcolors.ENDC}")
     print(f"For primary material, you said: {bcolors.FAIL}{numbers_to_materials_dict[primary_material]}{bcolors.ENDC}"
           "\t\tCorrect answer: Wood/Siding" if primary_material != 2 else "For primary material, you said: "
           f"{numbers_to_materials_dict[primary_material]}\t\tCorrect answer: Wood/Siding")
     print(f"For secondary material, you said: {bcolors.FAIL}{numbers_to_materials_dict[secondary_material]}"
-          f"{bcolors.ENDC}\t\tCorrect answer: None" if secondary_material != 6 else "For secondary material, you "
+          f"{bcolors.ENDC}\t\tCorrect answer: None" if secondary_material != 7 else "For secondary material, you "
           f"said: {numbers_to_materials_dict[secondary_material]}\t\tCorrect answer: None")
     print(f"For building use, you said: {bcolors.FAIL}{nums_to_use_dict[building_use]}{bcolors.ENDC}"
           f"\t\tCorrect answer: Agriculture" if building_use != 19 else
