@@ -89,6 +89,31 @@ def ask_building_material():
 
 
 """
+This function asks the user what percentage of the building is made up by the primary material in the image
+  - If the user chose None or Delete for the image, then this question is skipped and N/A is printed in its place
+
+@return the string with the answer (either a percentage or N/A)
+"""
+
+
+def ask_percentage_material():
+    choices_arr = ["100%", "75%", "50%", "25%"]
+    while True:
+        print("\nWhat percentage of the building is made up by the primary material? Choose the closest answer."
+              "\n1. 100%\t\t2. 75%\t\t3. 50%\t4. 25%")
+        user_choice = input("Enter number: ")
+        try:
+            if user_choice.isalpha() or int(user_choice) < 1 or int(user_choice) > 4:
+                print("Invalid choice")  # if user entered <1 or >4 or not a number
+                continue
+        except (IndexError, ValueError):
+            print("Invalid choice")
+            continue
+        break
+    return choices_arr[int(user_choice) - 1]  # will never reach this point without values
+
+
+"""
 This function asks the user what the category of use of the building in the image is.
 
 @return building_use the use of the building as selected by the user
@@ -273,6 +298,10 @@ for image in images:
         continue
 
     primary_material, secondary_material = ask_building_material()  # ask user 2 main materials make up the building
+    # if primary_material != 7 and primary_material != 8 and secondary_material != 8:
+    #     material_percentage = ask_percentage_material()  # THIS WHOLE PART is only for asking percentage of material
+    # else:
+    #     material_percentage = "N/A"
     building_use = ask_building_use()
 
     cv2.destroyAllWindows()  # close image
