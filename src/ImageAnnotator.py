@@ -276,22 +276,22 @@ for _ in range(num_images):  # iterate for the # of times = # of images user wan
         shutil.move(f"{path_to_imgs_to_annotate_dir}/{image_to_move}", f"{path_to_imgs_temp_dir}/{image_to_move}")
         images.append(image_to_move)  # add the moved image to the images to annotate list for this session
         to_annotate.remove(image_to_move)  # remove image from the to_annotate list, so that it isn't randomly chosen
-    except:
+    except:  # if any error occurs
         to_annotate = os.listdir(path_to_imgs_to_annotate_dir)  # update current list, and try again
         image_to_move = random.choice(to_annotate)  # same operations again
         shutil.move(f"{path_to_imgs_to_annotate_dir}/{image_to_move}", f"{path_to_imgs_temp_dir}/{image_to_move}")
         images.append(image_to_move)
         to_annotate.remove(image_to_move)
 
-n = 1
-num_images = len(images)
-for image in images:
-    print(f"\n{bcolors.UNDERLINE}Image {n}/{num_images}{bcolors.ENDC}")
+n = 1  # current image
+num_images = len(images)  # total num images
+for image in images:  # go over the images
+    print(f"\n{bcolors.UNDERLINE}Image {n}/{num_images}{bcolors.ENDC}")  # print which image we're on
 
     try:  # check for any errors that might be thrown
         img = cv2.imread(f"{path_to_imgs_temp_dir}/{image}")  # start the image
-        cv2.imshow(f"Image {n}", img)
-        cv2.waitKey(2000)
+        cv2.imshow(f"Image {n}", img)  # show the image
+        cv2.waitKey(2000)  # waiting on user input (won't go away until user is done with image and moves to next)
     except:  # if error, most likely it is because image no longer exists
         print(f"{bcolors.WARNING}Image doesn't exist. Moving to next image.{bcolors.ENDC}")
         n += 1
@@ -312,7 +312,7 @@ for image in images:
             with open(path_to_output_csv, "a") as output:  # write results to csv file, numbers first, then strings
                 output.write(f"{image},{primary_material},{secondary_material},{building_use},"
                              f"{numbers_to_materials_dict[primary_material]},{numbers_to_materials_dict[secondary_material]},"
-                             f"{nums_to_use_dict[building_use]}\n")
+                             f"{nums_to_use_dict[building_use]}\n")  # write the users choices to the CSV output file
             if i > 0:
                 print(f"{bcolors.OKGREEN}Successful!{bcolors.ENDC}")
             break  # if it works, break the loop and continue with annotation
@@ -329,5 +329,5 @@ for image in images:
 
     n += 1  # done with that image now
 
-if num_images > 0:
+if num_images > 0:  # only print this if there were images chosen to be annotated
     print(f"\n{bcolors.OKGREEN}{bcolors.BOLD}Session complete! Thank you for your time and help!{bcolors.ENDC}")
